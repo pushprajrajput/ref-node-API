@@ -5,11 +5,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
+const user_1 = __importDefault(require("./repositories/user"));
+const user_2 = __importDefault(require("./services/user"));
+const routes_1 = __importDefault(require("./handlers/user/routes"));
 const server = (0, express_1.default)();
 server.use((0, cors_1.default)());
 server.use(express_1.default.json());
 server.use(express_1.default.urlencoded({ extended: true }));
 function main() {
-    server.listen(8000);
+    const userRepository = new user_1.default();
+    const userService = new user_2.default({ userRepository });
+    const userRoutes = (0, routes_1.default)(userService);
+    server.use("/users", userRoutes);
+    server.listen(8000, () => {
+        console.log("Listening at 8000");
+    });
 }
 main();

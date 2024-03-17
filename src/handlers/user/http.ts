@@ -16,13 +16,13 @@ export default class UserHandler implements IUserHandler {
 
   public async add(req: Request, res: Response): Promise<void> {
     try {
-      const id = await this.userService.add(req.body as unknown as IUser);
+      const id = await this.userService.add(req.body as IUser);
 
       res.status(200).json({ id });
     } catch (error: any) {
       const response = error.response;
       res.status(500).json({
-        error,
+        response,
       });
     }
   }
@@ -31,12 +31,42 @@ export default class UserHandler implements IUserHandler {
     try {
       const { id } = req.params;
 
-      const incomingCalls = await this.userService.getId(id);
+      const user = await this.userService.getById(id);
 
-      res.status(200).json({ incomingCalls });
+      res.status(200).json({ user });
     } catch (error: any) {
+      const response = error.response;
       res.status(500).json({
-        error,
+        response,
+      });
+    }
+  }
+
+  public async getAll(req: Request, res: Response): Promise<void> {
+    try {
+      const users = await this.userService.get();
+
+      res.status(200).json({ users });
+    } catch (error: any) {
+      const response = error.response;
+      res.status(500).json({
+        response,
+      });
+    }
+  }
+
+  public async update(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      const user = req.body as IUser;
+
+      const userId = await this.userService.update(id, user);
+
+      res.status(200).json({ userId });
+    } catch (error: any) {
+      const response = error.response;
+      res.status(500).json({
+        response,
       });
     }
   }

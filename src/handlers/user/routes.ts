@@ -8,7 +8,11 @@ export default function handleUserRoutes(userService: IUserService) {
 
   router.post("/", (req, res) => http.add(req, res));
 
-  router.get("/:storeId", (req, res) => http.getById(req, res));
+  router.get("/", (req, res) => http.getAll(req, res));
+
+  router.get("/:id", (req, res) => http.getById(req, res));
+
+  router.put("/:id", (req, res) => http.update(req, res));
 
   return router;
 }

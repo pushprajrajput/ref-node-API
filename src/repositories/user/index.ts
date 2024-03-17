@@ -1,15 +1,30 @@
 import { IUser } from "../../interfaces/models/user";
 import { IUserRepository } from "../../interfaces/repositories/user";
+import User from "../../models/user";
 
-export default class implements IUserRepository {
+export default class UserRepository implements IUserRepository {
   constructor() {}
-  add(user: IUser): Promise<string> {
-    throw new Error("Method not implemented.");
+
+  public async getAll(): Promise<IUser[]> {
+    const users: IUser[] = [];
+    return users;
   }
-  get(id: string): Promise<IUser> {
-    throw new Error("Method not implemented.");
+
+  public async add(user: IUser): Promise<string> {
+    return "";
   }
-  update(id: string, user: IUser): Promise<string> {
-    throw new Error("Method not implemented.");
+
+  public async getById(id: string): Promise<IUser> {
+    const user: IUser = new User({
+      id,
+      name: "Name",
+      email: "email@email.com",
+      phone: "+91 96875 65963",
+    });
+    return user;
+  }
+
+  public async update(id: string, user: IUser): Promise<string> {
+    return "";
   }
 }
